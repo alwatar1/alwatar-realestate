@@ -48,9 +48,7 @@ export default function SettingsPage() {
       const data = await res.json();
 
       if (!res.ok || !data.urls?.[0]) {
-        setMessage(
-          data.error || 'فشل رفع الصورة'
-        );
+        setMessage(data.error || 'فشل رفع الصورة');
         return;
       }
 
@@ -82,16 +80,14 @@ export default function SettingsPage() {
         body: JSON.stringify(settings),
       });
 
-      if (res.ok) {
-        setMessage(
-          'تم حفظ التغييرات بنجاح ✓'
-        );
-      } else {
-        const data = await res.json().catch(() => null);
+      const data = await res.json();
 
+      if (res.ok) {
+        setSettings(data);
+        setMessage('تم حفظ التغييرات بنجاح ✓');
+      } else {
         setMessage(
-          data?.error ||
-            'حدث خطأ أثناء الحفظ'
+          data?.error || 'حدث خطأ أثناء الحفظ'
         );
       }
     } catch {
@@ -151,10 +147,7 @@ export default function SettingsPage() {
             }}
             value={settings.siteName || ''}
             onChange={(e) =>
-              update(
-                'siteName',
-                e.target.value
-              )
+              update('siteName', e.target.value)
             }
           />
 
@@ -171,11 +164,7 @@ export default function SettingsPage() {
             </h3>
 
             {settings.logoUrl && (
-              <div
-                style={{
-                  marginBottom: 15,
-                }}
-              >
+              <div style={{ marginBottom: 15 }}>
                 <img
                   src={settings.logoUrl}
                   alt="شعار المكتب"
@@ -192,9 +181,7 @@ export default function SettingsPage() {
               </div>
             )}
 
-            <label>
-              رفع شعار جديد
-            </label>
+            <label>رفع شعار جديد</label>
 
             <input
               type="file"
@@ -205,10 +192,7 @@ export default function SettingsPage() {
               }}
               disabled={uploading === 'logoUrl'}
               onChange={(e) =>
-                uploadImage(
-                  e,
-                  'logoUrl'
-                )
+                uploadImage(e, 'logoUrl')
               }
             />
 
@@ -222,14 +206,9 @@ export default function SettingsPage() {
               <button
                 type="button"
                 className="btn"
-                style={{
-                  marginTop: 10,
-                }}
+                style={{ marginTop: 10 }}
                 onClick={() =>
-                  update(
-                    'logoUrl',
-                    ''
-                  )
+                  update('logoUrl', '')
                 }
               >
                 حذف الشعار
@@ -251,10 +230,7 @@ export default function SettingsPage() {
             }}
             value={settings.headline || ''}
             onChange={(e) =>
-              update(
-                'headline',
-                e.target.value
-              )
+              update('headline', e.target.value)
             }
           />
 
@@ -266,9 +242,7 @@ export default function SettingsPage() {
               width: '100%',
               margin: '6px 0 18px',
             }}
-            value={
-              settings.subheadline || ''
-            }
+            value={settings.subheadline || ''}
             onChange={(e) =>
               update(
                 'subheadline',
@@ -286,9 +260,7 @@ export default function SettingsPage() {
               minHeight: 120,
               margin: '6px 0 18px',
             }}
-            value={
-              settings.description || ''
-            }
+            value={settings.description || ''}
             onChange={(e) =>
               update(
                 'description',
@@ -312,11 +284,7 @@ export default function SettingsPage() {
             </h3>
 
             {settings.heroImageUrl && (
-              <div
-                style={{
-                  marginBottom: 15,
-                }}
-              >
+              <div style={{ marginBottom: 15 }}>
                 <img
                   src={settings.heroImageUrl}
                   alt="صورة الواجهة الرئيسية"
@@ -343,8 +311,7 @@ export default function SettingsPage() {
                 marginTop: 8,
               }}
               disabled={
-                uploading ===
-                'heroImageUrl'
+                uploading === 'heroImageUrl'
               }
               onChange={(e) =>
                 uploadImage(
@@ -354,8 +321,7 @@ export default function SettingsPage() {
               }
             />
 
-            {uploading ===
-              'heroImageUrl' && (
+            {uploading === 'heroImageUrl' && (
               <p className="muted">
                 جارٍ رفع الصورة...
               </p>
@@ -365,9 +331,7 @@ export default function SettingsPage() {
               <button
                 type="button"
                 className="btn"
-                style={{
-                  marginTop: 10,
-                }}
+                style={{ marginTop: 10 }}
                 onClick={() =>
                   update(
                     'heroImageUrl',
@@ -384,9 +348,7 @@ export default function SettingsPage() {
 
           <h2>الأزرار</h2>
 
-          <label>
-            نص الزر الرئيسي
-          </label>
+          <label>نص الزر الرئيسي</label>
 
           <input
             className="field"
@@ -395,8 +357,7 @@ export default function SettingsPage() {
               margin: '6px 0 18px',
             }}
             value={
-              settings.primaryButtonText ||
-              ''
+              settings.primaryButtonText || ''
             }
             onChange={(e) =>
               update(
@@ -406,9 +367,7 @@ export default function SettingsPage() {
             }
           />
 
-          <label>
-            رابط الزر الرئيسي
-          </label>
+          <label>رابط الزر الرئيسي</label>
 
           <input
             className="field"
@@ -417,8 +376,7 @@ export default function SettingsPage() {
               margin: '6px 0 18px',
             }}
             value={
-              settings.primaryButtonUrl ||
-              ''
+              settings.primaryButtonUrl || ''
             }
             onChange={(e) =>
               update(
@@ -428,9 +386,7 @@ export default function SettingsPage() {
             }
           />
 
-          <label>
-            نص الزر الثاني
-          </label>
+          <label>نص الزر الثاني</label>
 
           <input
             className="field"
@@ -439,8 +395,7 @@ export default function SettingsPage() {
               margin: '6px 0 18px',
             }}
             value={
-              settings.secondaryButtonText ||
-              ''
+              settings.secondaryButtonText || ''
             }
             onChange={(e) =>
               update(
@@ -450,9 +405,7 @@ export default function SettingsPage() {
             }
           />
 
-          <label>
-            رابط الزر الثاني
-          </label>
+          <label>رابط الزر الثاني</label>
 
           <input
             className="field"
@@ -461,8 +414,7 @@ export default function SettingsPage() {
               margin: '6px 0 18px',
             }}
             value={
-              settings.secondaryButtonUrl ||
-              ''
+              settings.secondaryButtonUrl || ''
             }
             onChange={(e) =>
               update(
@@ -481,10 +433,7 @@ export default function SettingsPage() {
             ['whatsapp', 'رقم الواتساب'],
             ['email', 'البريد الإلكتروني'],
             ['address', 'عنوان المكتب'],
-            [
-              'mapUrl',
-              'رابط الموقع على الخريطة',
-            ],
+            ['mapUrl', 'رابط الموقع على الخريطة'],
           ].map(([key, label]) => (
             <div key={key}>
               <label>{label}</label>
@@ -493,12 +442,9 @@ export default function SettingsPage() {
                 className="field"
                 style={{
                   width: '100%',
-                  margin:
-                    '6px 0 18px',
+                  margin: '6px 0 18px',
                 }}
-                value={
-                  settings[key] || ''
-                }
+                value={settings[key] || ''}
                 onChange={(e) =>
                   update(
                     key,
@@ -516,9 +462,7 @@ export default function SettingsPage() {
           <div className="formgrid">
 
             <div>
-              <label>
-                اللون الأساسي
-              </label>
+              <label>اللون الأساسي</label>
 
               <input
                 type="color"
@@ -536,9 +480,7 @@ export default function SettingsPage() {
             </div>
 
             <div>
-              <label>
-                اللون الثانوي
-              </label>
+              <label>اللون الثانوي</label>
 
               <input
                 type="color"
@@ -559,27 +501,13 @@ export default function SettingsPage() {
 
           {/* الأقسام */}
 
-          <h2>
-            أقسام الصفحة الرئيسية
-          </h2>
+          <h2>أقسام الصفحة الرئيسية</h2>
 
           {[
-            [
-              'showFeatured',
-              'العقارات المميزة',
-            ],
-            [
-              'showNeighborhoods',
-              'الأحياء',
-            ],
-            [
-              'showAbout',
-              'من نحن',
-            ],
-            [
-              'showContact',
-              'التواصل',
-            ],
+            ['showFeatured', 'العقارات المميزة'],
+            ['showNeighborhoods', 'الأحياء'],
+            ['showAbout', 'من نحن'],
+            ['showContact', 'التواصل'],
           ].map(([key, label]) => (
             <label
               key={key}
@@ -611,12 +539,9 @@ export default function SettingsPage() {
             style={{
               width: '100%',
               minHeight: 100,
-              margin:
-                '6px 0 18px',
+              margin: '6px 0 18px',
             }}
-            value={
-              settings.footerText || ''
-            }
+            value={settings.footerText || ''}
             onChange={(e) =>
               update(
                 'footerText',
@@ -628,9 +553,7 @@ export default function SettingsPage() {
 
           {/* التواصل الاجتماعي */}
 
-          <h2>
-            التواصل الاجتماعي
-          </h2>
+          <h2>التواصل الاجتماعي</h2>
 
           {[
             ['instagram', 'Instagram'],
@@ -644,12 +567,9 @@ export default function SettingsPage() {
                 className="field"
                 style={{
                   width: '100%',
-                  margin:
-                    '6px 0 18px',
+                  margin: '6px 0 18px',
                 }}
-                value={
-                  settings[key] || ''
-                }
+                value={settings[key] || ''}
                 onChange={(e) =>
                   update(
                     key,

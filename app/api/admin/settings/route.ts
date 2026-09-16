@@ -29,75 +29,150 @@ export async function PUT(req: Request) {
 
     const data = await req.json();
 
-    const existing = await prisma.siteSettings.findFirst();
+    let existing = await prisma.siteSettings.findFirst();
 
-    const settings = existing
-      ? await prisma.siteSettings.update({
-          where: { id: existing.id },
-          data: {
-            siteName: data.siteName,
-            logoUrl: data.logoUrl || null,
-            headline: data.headline,
-            subheadline: data.subheadline || null,
-            description: data.description || null,
-            heroImageUrl: data.heroImageUrl || null,
-            primaryButtonText: data.primaryButtonText,
-            primaryButtonUrl: data.primaryButtonUrl,
-            secondaryButtonText: data.secondaryButtonText,
-            secondaryButtonUrl: data.secondaryButtonUrl,
-            phone: data.phone || null,
-            whatsapp: data.whatsapp || null,
-            email: data.email || null,
-            address: data.address || null,
-            mapUrl: data.mapUrl || null,
-            primaryColor: data.primaryColor,
-            secondaryColor: data.secondaryColor,
-            showFeatured: Boolean(data.showFeatured),
-            showNeighborhoods: Boolean(data.showNeighborhoods),
-            showAbout: Boolean(data.showAbout),
-            showContact: Boolean(data.showContact),
-            footerText: data.footerText || null,
-            instagram: data.instagram || null,
-            snapchat: data.snapchat || null,
-            tiktok: data.tiktok || null,
-          },
-        })
-      : await prisma.siteSettings.create({
-          data: {
-            siteName: data.siteName || 'الوتر المعماري',
-            logoUrl: data.logoUrl || null,
-            headline: data.headline || 'عقارك يبدأ من هنا',
-            subheadline: data.subheadline || null,
-            description: data.description || null,
-            heroImageUrl: data.heroImageUrl || null,
-            primaryButtonText: data.primaryButtonText || 'تصفح العقارات',
-            primaryButtonUrl: data.primaryButtonUrl || '/properties',
-            secondaryButtonText:
-              data.secondaryButtonText || 'تواصل معنا',
-            secondaryButtonUrl:
-              data.secondaryButtonUrl || '#contact',
-            phone: data.phone || null,
-            whatsapp: data.whatsapp || null,
-            email: data.email || null,
-            address: data.address || null,
-            mapUrl: data.mapUrl || null,
-            primaryColor: data.primaryColor || '#b8954a',
-            secondaryColor: data.secondaryColor || '#111111',
-            showFeatured: data.showFeatured !== false,
-            showNeighborhoods: data.showNeighborhoods !== false,
-            showAbout: data.showAbout !== false,
-            showContact: data.showContact !== false,
-            footerText: data.footerText || null,
-            instagram: data.instagram || null,
-            snapchat: data.snapchat || null,
-            tiktok: data.tiktok || null,
-          },
-        });
+    if (!existing) {
+      existing = await prisma.siteSettings.create({
+        data: {},
+      });
+    }
+
+    const settings = await prisma.siteSettings.update({
+      where: { id: existing.id },
+      data: {
+        siteName:
+          typeof data.siteName === 'string'
+            ? data.siteName
+            : existing.siteName,
+
+        logoUrl:
+          typeof data.logoUrl === 'string'
+            ? data.logoUrl
+            : existing.logoUrl,
+
+        headline:
+          typeof data.headline === 'string'
+            ? data.headline
+            : existing.headline,
+
+        subheadline:
+          typeof data.subheadline === 'string'
+            ? data.subheadline
+            : existing.subheadline,
+
+        description:
+          typeof data.description === 'string'
+            ? data.description
+            : existing.description,
+
+        heroImageUrl:
+          typeof data.heroImageUrl === 'string'
+            ? data.heroImageUrl
+            : existing.heroImageUrl,
+
+        primaryButtonText:
+          typeof data.primaryButtonText === 'string'
+            ? data.primaryButtonText
+            : existing.primaryButtonText,
+
+        primaryButtonUrl:
+          typeof data.primaryButtonUrl === 'string'
+            ? data.primaryButtonUrl
+            : existing.primaryButtonUrl,
+
+        secondaryButtonText:
+          typeof data.secondaryButtonText === 'string'
+            ? data.secondaryButtonText
+            : existing.secondaryButtonText,
+
+        secondaryButtonUrl:
+          typeof data.secondaryButtonUrl === 'string'
+            ? data.secondaryButtonUrl
+            : existing.secondaryButtonUrl,
+
+        phone:
+          typeof data.phone === 'string'
+            ? data.phone
+            : existing.phone,
+
+        whatsapp:
+          typeof data.whatsapp === 'string'
+            ? data.whatsapp
+            : existing.whatsapp,
+
+        email:
+          typeof data.email === 'string'
+            ? data.email
+            : existing.email,
+
+        address:
+          typeof data.address === 'string'
+            ? data.address
+            : existing.address,
+
+        mapUrl:
+          typeof data.mapUrl === 'string'
+            ? data.mapUrl
+            : existing.mapUrl,
+
+        primaryColor:
+          typeof data.primaryColor === 'string'
+            ? data.primaryColor
+            : existing.primaryColor,
+
+        secondaryColor:
+          typeof data.secondaryColor === 'string'
+            ? data.secondaryColor
+            : existing.secondaryColor,
+
+        showFeatured:
+          typeof data.showFeatured === 'boolean'
+            ? data.showFeatured
+            : existing.showFeatured,
+
+        showNeighborhoods:
+          typeof data.showNeighborhoods === 'boolean'
+            ? data.showNeighborhoods
+            : existing.showNeighborhoods,
+
+        showAbout:
+          typeof data.showAbout === 'boolean'
+            ? data.showAbout
+            : existing.showAbout,
+
+        showContact:
+          typeof data.showContact === 'boolean'
+            ? data.showContact
+            : existing.showContact,
+
+        footerText:
+          typeof data.footerText === 'string'
+            ? data.footerText
+            : existing.footerText,
+
+        instagram:
+          typeof data.instagram === 'string'
+            ? data.instagram
+            : existing.instagram,
+
+        snapchat:
+          typeof data.snapchat === 'string'
+            ? data.snapchat
+            : existing.snapchat,
+
+        tiktok:
+          typeof data.tiktok === 'string'
+            ? data.tiktok
+            : existing.tiktok,
+      },
+    });
 
     return NextResponse.json(settings);
   } catch (e: any) {
+    console.error('Settings save error:', e);
+
     return NextResponse.json(
-      { error: e.message || 'حدث خطأ أثناء الحفظ' },
+      { error: e?.message || 'حدث خطأ أثناء الحفظ' },
       { status: 400 }
     );
   }

@@ -11,7 +11,7 @@ model Admin {
   id           String   @id @default(cuid())
   email        String   @unique
   passwordHash String
-  name         String   @default("ط·آ·ط¢آ§ط·آ¸أ¢â‚¬â€چط·آ¸أ¢â‚¬آ¦ط·آ·ط¢آ§ط·آ¸أ¢â‚¬â€چط·آ¸ط¦â€™️")
+  name         String   @default("المالك")
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
@@ -20,7 +20,7 @@ model Neighborhood {
   id          String     @id @default(cuid())
   name        String     @unique
   slug        String     @unique
-  city        String     @default("ط·آ·ط¢آ§ط·آ¸أ¢â‚¬â€چط·آ·ط¢آ±ط·آ¸ط¸آ¹ط·آ·ط¢آ§ط·آ·ط¢آ¶")
+  city        String     @default("الرياض")
   description String?
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
@@ -70,15 +70,15 @@ model PropertyImage {
 
 model SiteSettings {
   id                  String   @id @default(cuid())
-  siteName            String   @default("ط·آ§ط¸â€‍ط¸ث†ط·ع¾ط·آ± ط·آ§ط¸â€‍ط¸â€¦ط·آ¹ط¸â€¦ط·آ§ط·آ±ط¸ظ¹")
+  siteName            String   @default("الوتر المعماري")
   logoUrl             String?
-  headline            String   @default("ط·آ¹ط¸â€ڑط·آ§ط·آ±ط¸ئ’ ط¸ظ¹ط·آ¨ط·آ¯ط·آ£ ط¸â€¦ط¸â€  ط¸â€،ط¸â€ ط·آ§")
+  headline            String   @default("عقارك يبدأ من هنا")
   subheadline         String?
   description         String?
   heroImageUrl        String?
-  primaryButtonText   String   @default("ط·ع¾ط·آµط¸ظ¾ط·آ­ ط·آ§ط¸â€‍ط·آ¹ط¸â€ڑط·آ§ط·آ±ط·آ§ط·ع¾")
+  primaryButtonText   String   @default("تصفح العقارات")
   primaryButtonUrl    String   @default("/properties")
-  secondaryButtonText String   @default("ط·ع¾ط¸ث†ط·آ§ط·آµط¸â€‍ ط¸â€¦ط·آ¹ط·آ±ط·آ§")
+  secondaryButtonText String   @default("تواصل معنا")
   secondaryButtonUrl  String   @default("#contact")
   phone               String?
   whatsapp            String?

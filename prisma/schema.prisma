@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -11,7 +11,7 @@ model Admin {
   id           String   @id @default(cuid())
   email        String   @unique
   passwordHash String
-  name         String   @default("ط·آ·ط¢آ§ط·آ¸أ¢â‚¬â€چط·آ¸أ¢â‚¬آ¦ط·آ·ط¢آ§ط·آ¸أ¢â‚¬â€چط·آ¸ط¦â€™")
+  name         String   @default("ط·آ·ط¢آ§ط·آ¸أ¢â‚¬â€چط·آ¸أ¢â‚¬آ¦ط·آ·ط¢آ§ط·آ¸أ¢â‚¬â€چط·آ¸ط¦â€™️")
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
@@ -41,10 +41,10 @@ model Property {
   phone          String?
   whatsapp       String?
   locationNote   String?
-advertiserName String?
+  advertiserName String?
   ownerName      String?
   ownerPhone     String?
-  views          Int      @default(0)
+  views          Int            @default(0)
   latitude       Float?
   longitude      Float?
   neighborhoodId String
@@ -52,6 +52,7 @@ advertiserName String?
   images         PropertyImage[]
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
+
   @@index([neighborhoodId, propertyType, listingType])
   @@index([featured])
 }
@@ -63,34 +64,36 @@ model PropertyImage {
   propertyId String
   property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
   createdAt  DateTime @default(now())
+
   @@index([propertyId, sortOrder])
 }
+
 model SiteSettings {
-  id String @id @default(cuid())
-  siteName String @default("ط·آ§ط¸â€‍ط¸ث†ط·ع¾ط·آ± ط·آ§ط¸â€‍ط¸â€¦ط·آ¹ط¸â€¦ط·آ§ط·آ±ط¸ظ¹")
-  logoUrl String?
-  headline String @default("ط·آ¹ط¸â€ڑط·آ§ط·آ±ط¸ئ’ ط¸ظ¹ط·آ¨ط·آ¯ط·آ£ ط¸â€¦ط¸â€  ط¸â€،ط¸â€ ط·آ§")
-  subheadline String?
-  description String?
-  heroImageUrl String?
-  primaryButtonText String @default("ط·ع¾ط·آµط¸ظ¾ط·آ­ ط·آ§ط¸â€‍ط·آ¹ط¸â€ڑط·آ§ط·آ±ط·آ§ط·ع¾")
-  primaryButtonUrl String @default("/properties")
-  secondaryButtonText String @default("ط·ع¾ط¸ث†ط·آ§ط·آµط¸â€‍ ط¸â€¦ط·آ¹ط¸â€ ط·آ§")
-  secondaryButtonUrl String @default("#contact")
-  phone String?
-  whatsapp String?
-  email String?
-  address String?
-  mapUrl String?
-  primaryColor String @default("#b8954a")
-  secondaryColor String @default("#111111")
-  showFeatured Boolean @default(true)
-  showNeighborhoods Boolean @default(true)
-  showAbout Boolean @default(true)
-  showContact Boolean @default(true)
-  footerText String?
-  instagram String?
-  snapchat String?
-  tiktok String?
-  updatedAt DateTime @updatedAt
+  id                  String   @id @default(cuid())
+  siteName            String   @default("ط·آ§ط¸â€‍ط¸ث†ط·ع¾ط·آ± ط·آ§ط¸â€‍ط¸â€¦ط·آ¹ط¸â€¦ط·آ§ط·آ±ط¸ظ¹")
+  logoUrl             String?
+  headline            String   @default("ط·آ¹ط¸â€ڑط·آ§ط·آ±ط¸ئ’ ط¸ظ¹ط·آ¨ط·آ¯ط·آ£ ط¸â€¦ط¸â€  ط¸â€،ط¸â€ ط·آ§")
+  subheadline         String?
+  description         String?
+  heroImageUrl        String?
+  primaryButtonText   String   @default("ط·ع¾ط·آµط¸ظ¾ط·آ­ ط·آ§ط¸â€‍ط·آ¹ط¸â€ڑط·آ§ط·آ±ط·آ§ط·ع¾")
+  primaryButtonUrl    String   @default("/properties")
+  secondaryButtonText String   @default("ط·ع¾ط¸ث†ط·آ§ط·آµط¸â€‍ ط¸â€¦ط·آ¹ط·آ±ط·آ§")
+  secondaryButtonUrl  String   @default("#contact")
+  phone               String?
+  whatsapp            String?
+  email               String?
+  address             String?
+  mapUrl              String?
+  primaryColor        String   @default("#b8954a")
+  secondaryColor      String   @default("#111111")
+  showFeatured        Boolean  @default(true)
+  showNeighborhoods   Boolean  @default(true)
+  showAbout           Boolean  @default(true)
+  showContact         Boolean  @default(true)
+  footerText          String?
+  instagram           String?
+  snapchat            String?
+  tiktok              String?
+  updatedAt           DateTime @updatedAt
 }

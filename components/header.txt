@@ -1,0 +1,24 @@
+import Link from 'next/link';
+
+export default function Header() {
+  return (
+    <header className="nav">
+      <div className="navin">
+        <Link href="/" className="logo">
+          الوتر <span>المعماري</span>
+        </Link>
+
+        <nav className="links">
+          <Link href="/">الرئيسية</Link>
+          <Link href="/properties">العقارات</Link>
+          <Link href="/#neighborhoods">الأحياء</Link>
+          <Link href="/admin/login">إدارة الموقع</Link>
+        </nav>
+
+        <Link href="/properties" className="btn gold">
+          تصفح العقارات
+        </Link>
+      </div>
+    </header>
+  );
+}

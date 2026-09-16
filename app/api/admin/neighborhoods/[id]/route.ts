@@ -1,0 +1,3 @@
+import {NextResponse} from 'next/server'; import {prisma} from '@/lib/prisma'; import {requireAdmin} from '@/lib/auth';
+export async function PUT(req:Request,{params}:{params:{id:string}}){try{await requireAdmin();const d=await req.json();return NextResponse.json(await prisma.neighborhood.update({where:{id:params.id},data:{name:d.name,slug:d.slug,city:d.city,description:d.description||null}}))}catch(e:any){return NextResponse.json({error:e.message},{status:400})}}
+export async function DELETE(_:Request,{params}:{params:{id:string}}){try{await requireAdmin();await prisma.neighborhood.delete({where:{id:params.id}});return NextResponse.json({ok:true})}catch(e:any){return NextResponse.json({error:'لا يمكن حذف الحي إذا كان مرتبطًا بعقارات'},{status:400})}}

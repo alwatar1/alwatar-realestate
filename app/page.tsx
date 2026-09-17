@@ -1,7 +1,9 @@
-﻿import Link from 'next/link';
+import Link from 'next/link';
 import { getFeatured, getNeighborhoods } from '@/lib/data';
 import { getSiteSettings } from '@/lib/settings';
 import PropertyCard from '@/components/PropertyCard';
+
+export const dynamic = 'force-dynamic';
 
 export default async function Home() {
   const [featured, neighborhoods, settings] = await Promise.all([
@@ -23,7 +25,6 @@ export default async function Home() {
         }}
       >
         <div className="container">
-
           {settings.logoUrl && (
             <div style={{ marginBottom: 20 }}>
               <img
@@ -71,20 +72,14 @@ export default async function Home() {
             </Link>
           </div>
 
-          <form
-            className="search"
-            action="/properties"
-          >
+          <form className="search" action="/properties">
             <input
               className="field"
               name="q"
               placeholder="ابحث باسم العقار أو الحي"
             />
 
-            <select
-              className="field"
-              name="type"
-            >
+            <select className="field" name="type">
               <option value="">كل الأنواع</option>
               <option value="APARTMENT">شقق</option>
               <option value="VILLA">فلل</option>
@@ -92,37 +87,26 @@ export default async function Home() {
               <option value="FLOOR">أدوار</option>
             </select>
 
-            <select
-              className="field"
-              name="listing"
-            >
+            <select className="field" name="listing">
               <option value="">بيع وإيجار</option>
               <option value="SALE">للبيع</option>
               <option value="RENT">للإيجار</option>
             </select>
 
-            <button
-              className="btn gold"
-              type="submit"
-            >
+            <button className="btn gold" type="submit">
               بحث
             </button>
           </form>
-
         </div>
       </section>
 
       {settings.showFeatured && (
         <section className="section">
           <div className="container">
-
             <div className="sectionhead">
               <h2>العقارات المميزة</h2>
 
-              <Link
-                className="btn"
-                href="/properties"
-              >
+              <Link className="btn" href="/properties">
                 عرض الكل
               </Link>
             </div>
@@ -141,18 +125,13 @@ export default async function Home() {
                 </p>
               )}
             </div>
-
           </div>
         </section>
       )}
 
       {settings.showNeighborhoods && (
-        <section
-          className="section"
-          id="neighborhoods"
-        >
+        <section className="section" id="neighborhoods">
           <div className="container">
-
             <div className="sectionhead">
               <h2>تصفح حسب الحي</h2>
             </div>
@@ -162,19 +141,13 @@ export default async function Home() {
                 neighborhoods.map((neighborhood) => (
                   <Link
                     className="ncard"
-                    href={
-                      '/neighborhood/' +
-                      neighborhood.slug
-                    }
+                    href={'/neighborhood/' + neighborhood.slug}
                     key={neighborhood.id}
                   >
-                    <b>
-                      حي {neighborhood.name}
-                    </b>
+                    <b>حي {neighborhood.name}</b>
 
                     <p className="muted">
-                      {neighborhood._count.properties}{' '}
-                      عقار
+                      {neighborhood._count.properties} عقار
                     </p>
                   </Link>
                 ))
@@ -184,7 +157,6 @@ export default async function Home() {
                 </p>
               )}
             </div>
-
           </div>
         </section>
       )}

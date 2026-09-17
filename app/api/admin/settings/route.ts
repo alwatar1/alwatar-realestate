@@ -1,12 +1,20 @@
-﻿import { NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { requireAdmin } from '@/lib/auth';
+
+async function getSettings() {
+  return prisma.siteSettings.findFirst({
+    orderBy: {
+      updatedAt: 'desc',
+    },
+  });
+}
 
 export async function GET() {
   try {
     await requireAdmin();
 
-    let settings = await prisma.siteSettings.findFirst();
+    let settings = await getSettings();
 
     if (!settings) {
       settings = await prisma.siteSettings.create({
@@ -29,7 +37,7 @@ export async function PUT(req: Request) {
 
     const data = await req.json();
 
-    let existing = await prisma.siteSettings.findFirst();
+    let existing = await getSettings();
 
     if (!existing) {
       existing = await prisma.siteSettings.create({
@@ -38,7 +46,9 @@ export async function PUT(req: Request) {
     }
 
     const settings = await prisma.siteSettings.update({
-      where: { id: existing.id },
+      where: {
+        id: existing.id,
+      },
       data: {
         siteName:
           typeof data.siteName === 'string'
@@ -172,7 +182,11 @@ export async function PUT(req: Request) {
     console.error('Settings save error:', e);
 
     return NextResponse.json(
-      { error: e?.message || 'حدث خطأ أثناء الحفظ' },
+      {
+        error:
+          e?.message ||
+          'حدث خطأ أثناء الحفظ',
+      },
       { status: 400 }
     );
   }

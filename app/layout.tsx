@@ -3,6 +3,8 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { getSiteSettings } from '@/lib/settings';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: 'الوتر المعماري',
   description:
@@ -18,6 +20,10 @@ export default async function RootLayout({
 
   return (
     <html lang="ar" dir="rtl">
+      <head>
+        <meta charSet="utf-8" />
+        <meta httpEquiv="Content-Language" content="ar" />
+      </head>
       <body
         style={
           {
